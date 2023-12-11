@@ -79,7 +79,7 @@ def main(args):
     model_name_or_path = args.model_name_or_path
     model, tokenizer = load(model_name_or_path)
 
-    prompt = input("Enter your prompt: ")
+    prompt = args.prompt
     prompts = [prompt]
 
     if args.enable_streaming:
@@ -106,6 +106,7 @@ if __name__ == "__main__":
     parser.add_argument("--enable_streaming", action="store_true")
     parser.add_argument("--start_size", type=int, default=4)
     parser.add_argument("--recent_size", type=int, default=2000)
+    parser.add_argument("--prompt", type=str, default="")
     args = parser.parse_args()
 
     main(args)
