@@ -78,20 +78,9 @@ def streaming_inference(model, tokenizer, prompts, kv_cache=None, max_gen_len=10
 def main(args):
     model_name_or_path = args.model_name_or_path
     model, tokenizer = load(model_name_or_path)
-    test_filepath = os.path.join(args.data_root, "mt_bench.jsonl")
-    print(f"Loading data from {test_filepath} ...")
 
-    if not os.path.exists(test_filepath):
-        download_url(
-            "https://raw.githubusercontent.com/lm-sys/FastChat/main/fastchat/llm_judge/data/mt_bench/question.jsonl",
-            args.data_root,
-        )
-        os.rename(os.path.join(args.data_root, "question.jsonl"), test_filepath)
-
-    list_data = load_jsonl(test_filepath)
-    prompts = []
-    for sample in list_data:
-        prompts += sample["turns"]
+    prompt = input("Enter your prompt: ")
+    prompts = [prompt]
 
     if args.enable_streaming:
         kv_cache = enable_streaming_llm(
